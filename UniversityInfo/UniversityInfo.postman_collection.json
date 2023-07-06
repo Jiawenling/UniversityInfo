@@ -1,0 +1,305 @@
+{
+	"info": {
+		"_postman_id": "2fdda4ec-ead1-41ad-9980-a42f941dce82",
+		"name": "UniversityInfo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27227704"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Username\": \"hello\",\n    \"Password\": \"Password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8443/Authentication",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"Authentication"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Username\": \"hello\",\n    \"Password\": \"Password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8443/Authentication/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"Authentication",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8443/University",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"University"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get with pagination",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8443/University?$skip=3&$top=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"University"
+					],
+					"query": [
+						{
+							"key": "$skip",
+							"value": "3"
+						},
+						{
+							"key": "$top",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get with filters",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8443/University?$filter=Country eq 'USA'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"University"
+					],
+					"query": [
+						{
+							"key": "$filter",
+							"value": "Country eq 'USA'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get /{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8443/University/e0c5fa7b-203c-4d97-b551-5fb8723b19c3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"University",
+						"e0c5fa7b-203c-4d97-b551-5fb8723b19c3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZmZiOTRjLTM1ZmUtNGNjYS1hMTI4LWFiM2ZmNzZkMzQwMCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJoZWxsbyIsIm5iZiI6MTY4ODYyNDAyOSwiZXhwIjoxNjg4NjI1ODI5LCJpc3MiOiJsb2NhbGhvc3Q6NTEwMCIsImF1ZCI6ImxvY2FsaG9zdDo1MTAwIn0.hf_Rth5DrPIfdQRh-p9cBJuH_8Hi5fam2k8TGOl-pTs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": \"60dda62b-7a1e-4759-9657-f41286d23da8\",\n        \"isBookMarked\": false,\n        \"name\": \"NTU\",\n        \"country\": \"Singapore\",\n        \"webpages\": \"google.com\",\n        \"created\": \"2022-06-02T18:51:18\",\n        \"lastModified\": \"2016-01-15T18:57:12\",\n        \"deletedAt\": \"2019-09-15T20:56:41\",\n        \"isActive\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8443/University/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"University",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZmZiOTRjLTM1ZmUtNGNjYS1hMTI4LWFiM2ZmNzZkMzQwMCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJoZWxsbyIsIm5iZiI6MTY4ODYyMjQ4NiwiZXhwIjoxNjg4NjI0Mjg2LCJpc3MiOiJsb2NhbGhvc3Q6NTEwMCIsImF1ZCI6ImxvY2FsaG9zdDo1MTAwIn0.I7p8OO7iL_vK_8Q_1xc5HlbdGO7U_PfFHKIa9BaJBQ8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": \"e0c5fa7b-203c-4d97-b551-5fb8723b19c3\",\n        \"isBookMarked\": false,\n        \"name\": \"Cooley Ramirez\",\n        \"country\": \"Turkey\",\n        \"webpages\": \"google.com\",\n        \"created\": \"2022-07-16T22:25:40\",\n        \"lastModified\": \"2022-11-25T03:44:49\",\n        \"deletedAt\": \"2020-01-16T01:30:26\",\n        \"isActive\": false\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8443/University/e0c5fa7b-203c-4d97-b551-5fb8723b19c3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"University",
+						"e0c5fa7b-203c-4d97-b551-5fb8723b19c3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZmZiOTRjLTM1ZmUtNGNjYS1hMTI4LWFiM2ZmNzZkMzQwMCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJoZWxsbyIsIm5iZiI6MTY4ODYyMzAzMiwiZXhwIjoxNjg4NjI0ODMyLCJpc3MiOiJsb2NhbGhvc3Q6NTEwMCIsImF1ZCI6ImxvY2FsaG9zdDo1MTAwIn0.WVufTK0JqEf21fSVKr4GIeAEOwDbbN2y8tDCjzFYPxo",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8443/University/60dda62b-7a1e-4759-9657-f41286d23da8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"University",
+						"60dda62b-7a1e-4759-9657-f41286d23da8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bookmark",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZmZiOTRjLTM1ZmUtNGNjYS1hMTI4LWFiM2ZmNzZkMzQwMCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJoZWxsbyIsIm5iZiI6MTY4ODYyNDAyOSwiZXhwIjoxNjg4NjI1ODI5LCJpc3MiOiJsb2NhbGhvc3Q6NTEwMCIsImF1ZCI6ImxvY2FsaG9zdDo1MTAwIn0.hf_Rth5DrPIfdQRh-p9cBJuH_8Hi5fam2k8TGOl-pTs",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8443/University/bookmark/94f9e53f-0282-423c-a187-1b8b119f7f04",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"University",
+						"bookmark",
+						"94f9e53f-0282-423c-a187-1b8b119f7f04"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
