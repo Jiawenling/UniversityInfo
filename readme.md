@@ -48,7 +48,7 @@ Configure JWT secret and name of database under appsettings.json
   },
   "AllowedHosts": "*"
 }
-```
+```csharp
 
 The program will seed data on startup - this can be disabled under 
 Program.cs:
@@ -65,7 +65,7 @@ using (var scope = app.Services.CreateScope())
 needed
 }
 ```
-##The following endpoints are supported:
+## The following endpoints are supported:
 
 ### GET
 GET/university: Retrieve a list of universities. <br/>
