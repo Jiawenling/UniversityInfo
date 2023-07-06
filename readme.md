@@ -48,11 +48,11 @@ Configure JWT secret and name of database under appsettings.json
   },
   "AllowedHosts": "*"
 }
-```csharp
+```
 
 The program will seed data on startup - this can be disabled under 
 Program.cs:
-```
+```csharp
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
