@@ -8,7 +8,6 @@ using Microsoft.IdentityModel.Tokens;
 using UniversityInfo.Helpers;
 using UniversityInfo.Models;
 using UniversityInfo.Service;
-using UniversityInfo.Utils;
 using Microsoft.AspNetCore.OData;
 using Microsoft.OData.ModelBuilder;
 
@@ -16,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var modelBuilder = new ODataConventionModelBuilder();
-modelBuilder.EntitySet<University>("Universities");
+modelBuilder.EntitySet<University>("University");
 builder.Services.AddControllers().AddOData(options =>
     options.SetMaxTop(null).Filter().OrderBy());;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
