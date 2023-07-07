@@ -47,7 +47,7 @@ namespace UniversityInfo.Controllers
                 var university = _dataContext.Universities.FirstOrDefault(x=> x.Id == id);
                 if(university!= null)
                     return Ok(university);
-                else return NotFound("University info not found.");
+                else return NotFound("University Id not found");
             }
             catch (System.Exception ex)
             {
@@ -63,6 +63,7 @@ namespace UniversityInfo.Controllers
             var user = await _userManager.Users.FirstOrDefaultAsync(o => o.UserName == username);
 
             if(user==null) return Unauthorized("User not found.");
+            university.Created = DateTime.Now;
             var novel = _dataContext.Universities.Add(university);
             
             await _dataContext.SaveChangesAsync();
@@ -75,6 +76,8 @@ namespace UniversityInfo.Controllers
         public async Task<IActionResult> BookmarkUniversity(Guid id)
         {
             var university = _dataContext.Universities.Find(id);
+            if (university == null) return NotFound("University Id not found");
+
             university.IsBookMarked = !university.IsBookMarked;
             await _dataContext.SaveChangesAsync();
             return Ok(university.IsBookMarked? "University information bookmarked.": "Removed bookmark from university info");
@@ -90,8 +93,9 @@ namespace UniversityInfo.Controllers
             if(user==null) return Unauthorized("User not found.");
 
             var u = _dataContext.Universities.Find(id);
-            if (u == null) return BadRequest("Unable to find university information");
+            if (u == null) return NotFound("University Id not found");
 
+            university.LastModified = DateTime.Now;
             _dataContext.Entry(u).CurrentValues.SetValues(university);
             await _dataContext.SaveChangesAsync();
             return Ok($"University information updated.");
@@ -104,10 +108,11 @@ namespace UniversityInfo.Controllers
         {
             var username = User.Identity.Name;
             var user = await _userManager.Users.FirstOrDefaultAsync(o => o.UserName == username);
-            if(user==null) return BadRequest("User not found");
-            var count = 0;
+            if(user==null) return Unauthorized("User not found");
+
             var university = _dataContext.Universities.FirstOrDefault(x=> x.Id == id);
-            if(university == null) return BadRequest("University Id not found");
+            if(university == null) return NotFound("University Id not found");
+
             _dataContext.Universities.Remove(university);
             await _dataContext.SaveChangesAsync();
             return Ok($"University info removed!");
