@@ -59,10 +59,6 @@ namespace UniversityInfo.Controllers
         [Authorize]
         public async Task<IActionResult> CreateUniversity([FromBody]University university)
         {
-            var username = User.Identity.Name;
-            var user = await _userManager.Users.FirstOrDefaultAsync(o => o.UserName == username);
-
-            if(user==null) return Unauthorized("User not found.");
             university.Created = DateTime.Now;
             var novel = _dataContext.Universities.Add(university);
             
@@ -88,10 +84,6 @@ namespace UniversityInfo.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateUniversity(Guid id, [FromBody]University university)
         {
-            var username = User.Identity.Name;
-            var user = await _userManager.Users.FirstOrDefaultAsync(o => o.UserName == username);
-            if(user==null) return Unauthorized("User not found.");
-
             var u = _dataContext.Universities.Find(id);
             if (u == null) return NotFound("University Id not found");
 
@@ -106,10 +98,6 @@ namespace UniversityInfo.Controllers
         [Authorize]
         public async Task<IActionResult> RemoveUniversity(Guid id)
         {
-            var username = User.Identity.Name;
-            var user = await _userManager.Users.FirstOrDefaultAsync(o => o.UserName == username);
-            if(user==null) return Unauthorized("User not found");
-
             var university = _dataContext.Universities.FirstOrDefault(x=> x.Id == id);
             if(university == null) return NotFound("University Id not found");
 

@@ -23,9 +23,6 @@ namespace UniversityInfo.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] Login registerRequest)
         {
-            if(!ModelState.IsValid){
-                return BadRequest("Username and/or password is empty");
-            }
             User newUser = new User()
             {
                 UserName = registerRequest.Username,
@@ -42,9 +39,8 @@ namespace UniversityInfo.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Login login)
         {
-            if (!ModelState.IsValid) return BadRequest();
             User user = await _userRepo.FindByNameAsync(login.Username);
-            if(user==null) return Unauthorized();
+            if(user==null) return Unauthorized("Username and/or password is incorrect.");
             Console.WriteLine($"{user.UserName}, {user.PasswordHash}");
             bool isCorrectPassword = await _userRepo.CheckPasswordAsync(user, login.Password);
             Console.WriteLine(isCorrectPassword);
