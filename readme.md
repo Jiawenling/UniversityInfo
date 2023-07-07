@@ -1,6 +1,6 @@
 # ASP.NET Core Web API
 
-A simple REST API using JWT tokens, Sqlite
+A simple REST API demonstrating the use of JWT token, Sqlite
 
 ## Prerequisites 
 
@@ -12,19 +12,25 @@ latest version of .NET Core from the official Microsoft website.
 System Requirements
 This project will run on any OS.
 
+## Endpoints:
 
-In order to test the console application run the following commands from 
-the command line:
+Certain endpoints requires an authorised user, please refer to next section for more information
 
-```
-dotnet build
-```
-
-You can run the application using the .dll found in /bin
-
-```
-dotnet University.dll
-```
+### GET
+GET/university: Retrieve a list of universities. <br/>
+GET/university/{id}: Retrieve details of a specific university by its ID.
+### POST
+POST/Authentication: Register as user<br/>
+POST/Authentication/Login: Login as user<br/>
+POST/university/bookmark/{id}: Bookmark a specific university <br/>
+`Authorised users only` POST/university: Create a new university <br/>
+### PUT
+`Authorised users only` PUT/university/{id}: Update details of a specific 
+university <br/>
+### DELETE
+`Authorised users only` DELETE/university/{id}: Delete a specific 
+university <br/>
+___
 
 ## How To Run
 
@@ -50,7 +56,7 @@ Configure JWT secret and name of database under appsettings.json
 }
 ```
 
-The program will seed data on startup - this can be disabled under 
+The program will seed data using this [json file](UniversityInfo/SeedData/Universities.json) on startup - this can be disabled under 
 Program.cs:
 ```csharp
 var app = builder.Build();
@@ -61,26 +67,68 @@ using (var scope = app.Services.CreateScope())
 
     var context = services.GetRequiredService<DataContext>();
     context.Database.Migrate();
-    DataInitialiser.SeedData(context).Wait(); //comment out this line if 
-needed
+    DataInitialiser.SeedData(context).Wait(); //optional
 }
 ```
-## The following endpoints are supported:
+You can run the program by using the following command
+```
+dotnet run
+```
 
-### GET
-GET/university: Retrieve a list of universities. <br/>
-GET/university/{id}: Retrieve details of a specific university by its ID.
-### POST
-POST/Authentication: Register as user<br/>
-POST/Authentication/Login: Login as user<br/>
-POST/university/bookmark/{id}: Bookmark a specific university <br/>
-`Authorised users only` POST/university: Create a new university <br/>
-### PUT
-`Authorised users only` PUT/university/{id}: Update details of a specific 
-university <br/>
-### DELETE
-`Authorised users only` DELETE/university/{id}: Delete a specific 
-university <br/>
+Once the program is running, you can import this [json file](UniversityInfo/UniversityInfo.postman_collection.json) into PostMan to start testing the endpoints
 
+### Accessing secured endpoints
 
-___
+Certain endpoints are only accessible by authorised users. Follow the steps below to get a JWT token:
+
+* POST `/authentication`
+
+    * Register the user and adds it to the database
+    * Request Body Example:
+
+        ```json
+        {
+            "Username": "adityaoberai1",
+            "Password": "test123"
+        }
+        ```
+
+* POST `/authentication/login`
+
+    * Returns the JWT token 
+    * Request Body Example:
+
+        ```json
+        {
+            "Username": "adityaoberai1",
+            "Password": "test123"
+        }
+        ```
+
+    * Response Example:
+
+        ```json
+        { "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRpdHlhb2JlcmFpMSIsImdpdmVuX25hbWUiOiJBZGl0eWEiLCJyb2xlIjoiRXZlcnlvbmUiLCJuYmYiOjE2NjA3NzA0NDQsImV4cCI6MTY2MDc3MjI0NCwiaWF0IjoxNjYwNzcwNDQ0fQ.20KEe53MsDeapYk0EkeayfZqmsyPSuVOVBzsHpmFMS4",
+        }
+        ```
+
+  * To access a secured endpoint you must add the following header into your payload.
+    * Example:
+
+        `Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWRpdHlhb2JlcmFpMSIsImdpdmVuX25hbWUiOiJBZGl0eWEiLCJyb2xlIjoiRXZlcnlvbmUiLCJuYmYiOjE2NjA3NzA0NDQsImV4cCI6MTY2MDc3MjI0NCwiaWF0IjoxNjYwNzcwNDQ0fQ.20KEe53MsDeapYk0EkeayfZqmsyPSuVOVBzsHpmFMS4`
+
+### Filtering and pagination for GET/University
+Filtering and pagination are acheived by using ASP .Net Core OData 8 library
+
+* Pagination: https://learn.microsoft.com/en-us/odata/webapi-8/fundamentals/client-driven-paging 
+Example:
+
+```
+http://localhost:8443/University?$skip=3&$top=1
+```
+* Filtering: https://learn.microsoft.com/en-us/aspnet/web-api/overview/odata-support-in-aspnet-web-api/supporting-odata-query-options
+Example:
+
+```
+http://localhost:8443/University?$filter=Country eq 'USA'
+```
